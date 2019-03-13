@@ -1,0 +1,20 @@
+Subsection objesi olacak - içinde Text, Ortalama, Std Sapma, N/A, No, 1,2,34,5,Üniversite Ortalamasý olacak
+Section objesi oluþturulacak - içinde subsection olacak
+File objesi objesi oluþturulacak içine Section arrayý ve file ismi alacak
+Section arrayý her filede olacak
+
+GUI de directory ve multiple file seçme butonu:
+
+Secilen dosyalardaki/dosyadaki (her bir dosyadaki):
+File adlarýný oku ve onu CourseCode_Section_Year_Term þeklinde ayýr.
+
+
+YIL-AVERAGE GRAFIKLERI butonu:
+
+GUI de input olarak course code al-
+Course codedeki yýllara göre tüm sectionlardaki averageleri:
+Bar charta at(legendler yýllar, x ekseni section adý, y ekseni average)
+
+Course codedeki yýllara göre tüm subsectionlardaki averageleri:
+Bar charta at(legendler yýllar, x ekseni subsection adý, y ekseni average)
+
