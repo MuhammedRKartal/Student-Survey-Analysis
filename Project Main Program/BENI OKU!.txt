@@ -1,1 +1,0 @@
-GUI,Main,Libraryler.rar dosyasýndaki diðer filelerle beraber çalýþtýrýlmasý lazým
