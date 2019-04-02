@@ -15,6 +15,7 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.DirectoryChooser;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.CategoryChart;
+import org.knowm.xchart.PieChart;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -47,7 +48,8 @@ public class saveOperations {
         currentPath= currentRelativePath.toAbsolutePath().toString();
 
 
-        ArrayList<CategoryChart> x = Charts.createAllSectionsVoteBCS(file);
+        ArrayList<CategoryChart> allSectionsVoteBCS = Charts.createAllSectionsVoteBCS(file);
+        ArrayList<PieChart> allSectionsVotePCS = Charts.createAllSectionsVotePCS(file);
 
 
 
@@ -88,11 +90,19 @@ public class saveOperations {
             writer.open();
             document.open();
             String path;
-            for (int i = 0; i<x.size(); i++) {
-                path = String.format("%s\\chart%dsinglefile.png", currentPath, i);
-                BitmapEncoder.saveBitmap(x.get(i), path, BitmapEncoder.BitmapFormat.PNG);
+            for (int i = 0; i<allSectionsVoteBCS.size(); i++) {
+                path = String.format("%s\\BarChartSubsectionVote%dSinglefile.png", currentPath, i);
+                BitmapEncoder.saveBitmap(allSectionsVoteBCS.get(i), path, BitmapEncoder.BitmapFormat.PNG);
                 document.add(com.itextpdf.text.Image.getInstance(path));
             }
+            for (int i = 0; i<allSectionsVoteBCS.size(); i++) {
+                path = String.format("%s\\PieChartSubsectionVote%dSinglefile.png", currentPath, i);
+                BitmapEncoder.saveBitmap(allSectionsVotePCS.get(i), path, BitmapEncoder.BitmapFormat.PNG);
+                document.add(com.itextpdf.text.Image.getInstance(path));
+            }
+
+
+
 
 
 
