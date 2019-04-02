@@ -91,7 +91,7 @@ public class Project extends Application implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         //set up table columns
         courseCode.setCellValueFactory(new PropertyValueFactory<>("courseCode"));
-        section.setCellValueFactory(new PropertyValueFactory<>("section"));
+        section.setCellValueFactory(new PropertyValueFactory<>("Sections"));
         year.setCellValueFactory(new PropertyValueFactory<>("year"));
         term.setCellValueFactory(new PropertyValueFactory<>("term"));
 
