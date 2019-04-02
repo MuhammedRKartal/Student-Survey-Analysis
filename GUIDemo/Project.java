@@ -1,5 +1,6 @@
-package GUIDemo;
+package Project.GUIDemo;
 
+import Project.mainObjects.File_f;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,14 +8,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import mainObjects.File_f;
 
 import java.io.File;
 import java.io.IOException;
@@ -70,6 +69,11 @@ public class Project extends Application implements Initializable {
     public TableColumn<Comments,String> userAddedComment;
 
 
+    @FXML
+    public Label savePathText;
+
+    @FXML
+    public RadioButton enableSavePathText;
 
     @Override
     //These are mandatory
@@ -85,6 +89,8 @@ public class Project extends Application implements Initializable {
 
         userAddedComment.setCellFactory(TextFieldTableCell.forTableColumn());
         commentTable.setEditable(true);
+
+        savePathText.setText("");
     }
 
 
@@ -138,6 +144,21 @@ public class Project extends Application implements Initializable {
     public void changeUserAddedCommentCellEvent(TableColumn.CellEditEvent editedCell){
         Comments commentSelected = commentTable.getSelectionModel().getSelectedItem();
         commentSelected.setUserAddedComment(editedCell.getNewValue().toString());
+    }
+
+    public void savePathTextEnabled(){
+        try{
+            boolean x = enableSavePathText.isSelected();
+            if(enableSavePathText.isSelected()){
+                savePathText.setText(saveOperations.currentPath);
+            }
+            else{
+                savePathText.setText("");
+            }
+        }
+        catch (Exception ex){
+        }
+
     }
 
 }
