@@ -18,7 +18,7 @@ public class File_f {
     private int    CevapAdedi;
     public int year;
     public ArrayList<String> comments=new ArrayList<>();
-    public Section section[]=new Section[8];
+    public Section section[]=new Section[7];
 
     public int getSect() {
         return sect;
