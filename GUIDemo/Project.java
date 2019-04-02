@@ -102,9 +102,10 @@ public class Project extends Application implements Initializable {
     public void choseDirectoryButtonPushed(ActionEvent event) throws IOException{
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Select Directory Dialog");
+        filesArray = new LinkedList<>();
 
         File directory = directoryChooser.showDialog(null);
-        List<File> tempFilesArray;
+        List<File> tempFilesArray = new LinkedList<>();
         tempFilesArray = Arrays.asList(directory.listFiles());
 
         for(int i=0; i<tempFilesArray.size();i++){
