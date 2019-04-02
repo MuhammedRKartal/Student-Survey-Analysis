@@ -4,7 +4,9 @@ import Project.barCharts.barChart;
 import Project.mainObjects.File_f;
 import Project.mainObjects.Section;
 import Project.mainObjects.Subsection;
+import Project.pieCharts.pieChart;
 import org.knowm.xchart.CategoryChart;
+import org.knowm.xchart.PieChart;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,7 +17,7 @@ public class Charts {
             "Lab","Teaching Ass.","Overall Evalution","Learning Outcomes"));
 
 
-    private static ArrayList<Double> createOneSubSectionVoteBC(Subsection subsection){
+    private static ArrayList<Double> createOneSubSectionVote(Subsection subsection){
         ArrayList<Double> yAxis = new ArrayList<>();
 
         int numberOfOne = (int)subsection.one;
@@ -34,23 +36,13 @@ public class Charts {
     }
 
     private static CategoryChart createOneSectionVoteBC(Subsection subsection){
-//        ArrayList<Subsection> subsections = section.getSubsections();
-
         String nameOfChart = subsection.text + " - Votes";
-
         barChart chart = new barChart(500,500,nameOfChart,"Votes","Number of Votes");
 
         ArrayList<String> xAxis = votes;
-//        for (Subsection oneSubSection: subsections) {
-//            xAxis.add(oneSubSection.text);
-//        }
-
-        ArrayList<Double> yAxis = createOneSubSectionVoteBC(subsection);
-        System.out.println("x");
+        ArrayList<Double> yAxis = createOneSubSectionVote(subsection);
 
         chart.addElements("hey",xAxis,yAxis);
-
-        System.out.println("x");
         return chart.getChart();
     }
 
@@ -70,8 +62,35 @@ public class Charts {
 
 
 
-//
-//
+
+    private static PieChart createOneSectionVotePC(Subsection subsection){
+        String nameOfChart = subsection.text + " - Votes";
+        pieChart chart = new pieChart(500,500,nameOfChart);
+
+        ArrayList<String> xAxis = votes;
+        ArrayList<Double> yAxis = createOneSubSectionVote(subsection);
+
+        chart.addElements(xAxis,yAxis);
+        return chart.getChart();
+    }
+
+    public static ArrayList<PieChart> createAllSectionsVotePCS(File_f file){
+        ArrayList<PieChart> pieCharts = new ArrayList<>();
+        Section[] x = file.Sections;
+        ArrayList<Subsection> subsections = x[2].subsections;
+        for (int i =0; i<file.Sections.length; i++){
+            for (int j=0; j<file.Sections[i].subsections.size(); j++){
+                pieCharts.add(createOneSectionVotePC(file.Sections[i].subsections.get(j)));
+            }
+        }
+        return pieCharts;
+    }
+
+
+
+
+
+
 //    public static RadarChart createSectionOrtalamalariRadarChart(File_f file) {
 //        // Create Chart
 //        radarChart chart = new radarChart(500,500,"Averages of Sections");
