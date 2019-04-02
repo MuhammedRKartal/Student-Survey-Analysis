@@ -27,6 +27,9 @@ public class Project extends Application implements Initializable {
     public void start(Stage stage) throws Exception {
         Parent root =  FXMLLoader.load(getClass().getResource("firstScreenReal.fxml"));
         Scene scene = new Scene(root);
+
+        stage.setTitle("Student Survey Analysis");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
