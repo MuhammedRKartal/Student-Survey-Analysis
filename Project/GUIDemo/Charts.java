@@ -49,7 +49,7 @@ public class Charts {
         ArrayList<String> xAxis = votes;
         ArrayList<Double> yAxis = createOneSubSectionVote(subsection);
 
-        chart.addElements("hey",xAxis,yAxis);
+        chart.addElements("Votes",xAxis,yAxis);
         return chart.getChart();
     }
 
@@ -266,11 +266,206 @@ public class Charts {
 
 
 
-//
-//
-//
-//
-//
+
+
+    public static CategoryChart createScoringForAllSectionsBarChart(File_f file){
+
+        barChart chart = new barChart(500, 500, "Number of Scores", "Score Points", "Numbers");
+        ArrayList<String> x = new ArrayList<>();
+        x.add("1");
+        x.add("2");
+        x.add("3");
+        x.add("4");
+        x.add("5");
+
+
+        int numberOfOne=0;
+        int numberOfTwo=0;
+        int numberOfThree=0;
+        int numberOfFour=0;
+        int numberofFive=0;
+
+        for(int i =0; i<7;i++){
+
+
+            for(int j = 0; j<file.Sections[i].subsections.size(); j++){
+                numberOfOne += (int)file.Sections[i].subsections.get(j).one;
+                numberOfTwo += (int)file.Sections[i].subsections.get(j).two;
+                numberOfThree += (int)file.Sections[i].subsections.get(j).three;
+                numberOfFour += (int)file.Sections[i].subsections.get(j).four;
+                numberofFive += (int)file.Sections[i].subsections.get(j).five;
+
+
+            }
+
+        }
+
+        ArrayList<Double> y = new ArrayList<>();
+        y.add((double) numberOfOne);
+        y.add((double) numberOfTwo);
+        y.add((double) numberOfThree);
+        y.add((double) numberOfFour);
+        y.add((double) numberofFive);
+
+
+        chart.addElements("Quantities",x,y);
+
+
+        return chart.getChart();
+
+    }
+
+    public static void printScoringForAllSectionsBarChart(File_f file){
+        CategoryChart chart = createScoringForAllSectionsBarChart(file);
+        new SwingWrapper<CategoryChart>(chart).displayChart();
+    }
+
+
+
+
+
+
+
+
+
+    public static CategoryChart createSectionOrtalamalariBarChart(File_f file){
+
+        barChart chart = new barChart(500, 500, "Section Ortalamalari", "Sections", "Averages");
+        ArrayList<String> x = new ArrayList<>();
+        x.add("Flipped");
+        x.add("Course");
+        x.add("Instructor");
+        x.add("Lab");
+        x.add("Teching Ass.");
+        x.add("Overall Evalution");
+        x.add("Learning OutComes");
+
+        double[] sectionAverages = new double[7];
+        double sectionAverage=0;
+
+        for(int i =0; i<7;i++){
+            int counter=0;
+            sectionAverage=0;
+            double total=0;
+            for(int j = 0; j<file.Sections[i].subsections.size(); j++){
+                counter++;
+                total = total + file.Sections[i].subsections.get(j).average;
+                sectionAverage = total/counter;
+            }
+            sectionAverages[i]=sectionAverage;
+        }
+
+        ArrayList<Double> y = new ArrayList<>();
+        y.add((double) sectionAverages[0]);
+        y.add((double) sectionAverages[1]);
+        y.add((double) sectionAverages[2]);
+        y.add((double) sectionAverages[3]);
+        y.add((double) sectionAverages[4]);
+        y.add((double) sectionAverages[5]);
+        y.add((double) sectionAverages[6]);
+
+
+        chart.addElements("Average",x,y);
+
+
+        return chart.getChart();
+
+    }
+
+    public static void printSectionOrtalamalariBarChart(File_f file){
+        CategoryChart chart = createSectionOrtalamalariBarChart(file);
+        new SwingWrapper<CategoryChart>(chart).displayChart();
+    }
+
+
+
+    public static PieChart createSectionOrtalamariPieChart(File_f file){
+
+        double[] sectionAverages = new double[7];
+        double sectionAverage=0;
+
+        for(int i =0; i<7;i++){
+            int counter=0;
+            sectionAverage=0;
+            double total=0;
+            for(int j = 0; j<file.Sections[i].subsections.size(); j++){
+                counter++;
+                total = total + file.Sections[i].subsections.get(j).average;
+                sectionAverage = total/counter;
+            }
+            sectionAverages[i]=sectionAverage;
+        }
+
+        pieChart chart1 = new pieChart(500,500,"Section Averages");
+        chart1.addSingleElement("Flipped Classroom",sectionAverages[0]);
+        chart1.addSingleElement("Course", sectionAverages[1]);
+        chart1.addSingleElement("Instructor",sectionAverages[2]);
+        chart1.addSingleElement("Labs", sectionAverages[3]);
+        chart1.addSingleElement("Teaching Assistant", sectionAverages[4]);
+        chart1.addSingleElement("Overall Evaluation", sectionAverages[5]);
+        chart1.addSingleElement("Course Learning Outcomes", sectionAverages[6]);
+        return chart1.getChart();
+    }
+
+    public static void printSectionOrtalamalariPieChart(File_f file){
+        PieChart chart = createSectionOrtalamariPieChart(file);
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+
+                // Create and set up the window.
+                JFrame frame = new JFrame("Charts");
+                frame.setLayout(new BorderLayout());
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+                // chart
+                JPanel chartPanel = new XChartPanel<PieChart>(chart);
+                frame.add(chartPanel, BorderLayout.CENTER);
+
+
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
+    }
+
+
+
+
+    public static PieChart createCevaplamaOraniPieChart(File_f file){
+        pieChart chart1 = new pieChart(500,500,"Cevaplama Oranı");
+        chart1.addSingleElement("Cevaplayan Öğrenci",file.getCevapAdedi());
+        chart1.addSingleElement("Cevaplamayan Öğrenci", file.getÖğrenciSayısı());
+        return chart1.getChart();
+    }
+
+    public static void printCevaplamaOraniPieChart(File_f file){
+        PieChart chart = createCevaplamaOraniPieChart(file);
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+
+                // Create and set up the window.
+                JFrame frame = new JFrame("Charts");
+                frame.setLayout(new BorderLayout());
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+                // chart
+                JPanel chartPanel = new XChartPanel<PieChart>(chart);
+                frame.add(chartPanel, BorderLayout.CENTER);
+
+
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
+    }
+}
+
+
+
 //    public static RadarChart createMultipleAveragesRadarChart(File_f file) {
 //        // Create Chart
 //        radarChart chart = new radarChart(500,500,"Multiple Averages");
@@ -493,130 +688,7 @@ public class Charts {
 //        CategoryChart chart = createMultipleAveragesBarChart(file);
 //        new SwingWrapper<CategoryChart>(chart).displayChart();
 //    }
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
-
-    public static CategoryChart createScoringForAllSectionsBarChart(File_f file){
-
-        barChart chart = new barChart(500, 500, "Number of Scores", "Score Points", "Numbers");
-        ArrayList<String> x = new ArrayList<>();
-        x.add("1");
-        x.add("2");
-        x.add("3");
-        x.add("4");
-        x.add("5");
-
-
-        int numberOfOne=0;
-        int numberOfTwo=0;
-        int numberOfThree=0;
-        int numberOfFour=0;
-        int numberofFive=0;
-
-        for(int i =0; i<7;i++){
-
-
-            for(int j = 0; j<file.Sections[i].subsections.size(); j++){
-                numberOfOne += (int)file.Sections[i].subsections.get(j).one;
-                numberOfTwo += (int)file.Sections[i].subsections.get(j).two;
-                numberOfThree += (int)file.Sections[i].subsections.get(j).three;
-                numberOfFour += (int)file.Sections[i].subsections.get(j).four;
-                numberofFive += (int)file.Sections[i].subsections.get(j).five;
-
-
-            }
-
-        }
-
-        ArrayList<Double> y = new ArrayList<>();
-        y.add((double) numberOfOne);
-        y.add((double) numberOfTwo);
-        y.add((double) numberOfThree);
-        y.add((double) numberOfFour);
-        y.add((double) numberofFive);
-
-
-        chart.addElements("Quantities",x,y);
-
-
-        return chart.getChart();
-
-    }
-
-    public static void printScoringForAllSectionsBarChart(File_f file){
-        CategoryChart chart = createScoringForAllSectionsBarChart(file);
-        new SwingWrapper<CategoryChart>(chart).displayChart();
-    }
-
-
-
-
-
-
-
-
-
-    public static CategoryChart createSectionOrtalamalariBarChart(File_f file){
-
-        barChart chart = new barChart(500, 500, "Section Ortalamalari", "Sections", "Averages");
-        ArrayList<String> x = new ArrayList<>();
-        x.add("Flipped");
-        x.add("Course");
-        x.add("Instructor");
-        x.add("Lab");
-        x.add("Teching Ass.");
-        x.add("Overall Evalution");
-        x.add("Learning OutComes");
-
-        double[] sectionAverages = new double[7];
-        double sectionAverage=0;
-
-        for(int i =0; i<7;i++){
-            int counter=0;
-            sectionAverage=0;
-            double total=0;
-            for(int j = 0; j<file.Sections[i].subsections.size(); j++){
-                counter++;
-                total = total + file.Sections[i].subsections.get(j).average;
-                sectionAverage = total/counter;
-            }
-            sectionAverages[i]=sectionAverage;
-        }
-
-        ArrayList<Double> y = new ArrayList<>();
-        y.add((double) sectionAverages[0]);
-        y.add((double) sectionAverages[1]);
-        y.add((double) sectionAverages[2]);
-        y.add((double) sectionAverages[3]);
-        y.add((double) sectionAverages[4]);
-        y.add((double) sectionAverages[5]);
-        y.add((double) sectionAverages[6]);
-
-
-        chart.addElements("Average",x,y);
-
-
-        return chart.getChart();
-
-    }
-
-    public static void printSectionOrtalamalariBarChart(File_f file){
-        CategoryChart chart = createSectionOrtalamalariBarChart(file);
-        new SwingWrapper<CategoryChart>(chart).displayChart();
-    }
 
 //    // #####################################################################################################################################
 //    // #####################################################################################################################################
@@ -682,88 +754,4 @@ public class Charts {
 //        });
 //    }
 //
-    public static PieChart createSectionOrtalamariPieChart(File_f file){
-
-        double[] sectionAverages = new double[7];
-        double sectionAverage=0;
-
-        for(int i =0; i<7;i++){
-            int counter=0;
-            sectionAverage=0;
-            double total=0;
-            for(int j = 0; j<file.Sections[i].subsections.size(); j++){
-                counter++;
-                total = total + file.Sections[i].subsections.get(j).average;
-                sectionAverage = total/counter;
-            }
-            sectionAverages[i]=sectionAverage;
-        }
-
-        pieChart chart1 = new pieChart(500,500,"Section Averages");
-        chart1.addSingleElement("Flipped Classroom",sectionAverages[0]);
-        chart1.addSingleElement("Course", sectionAverages[1]);
-        chart1.addSingleElement("Instructor",sectionAverages[2]);
-        chart1.addSingleElement("Labs", sectionAverages[3]);
-        chart1.addSingleElement("Teaching Assistant", sectionAverages[4]);
-        chart1.addSingleElement("Overall Evaluation", sectionAverages[5]);
-        chart1.addSingleElement("Course Learning Outcomes", sectionAverages[6]);
-        return chart1.getChart();
-    }
-
-    public static void printSectionOrtalamalariPieChart(File_f file){
-        PieChart chart = createSectionOrtalamariPieChart(file);
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-
-                // Create and set up the window.
-                JFrame frame = new JFrame("Charts");
-                frame.setLayout(new BorderLayout());
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-                // chart
-                JPanel chartPanel = new XChartPanel<PieChart>(chart);
-                frame.add(chartPanel, BorderLayout.CENTER);
-
-
-                frame.pack();
-                frame.setVisible(true);
-            }
-        });
-    }
-
-
-
-
-    public static PieChart createCevaplamaOraniPieChart(File_f file){
-        pieChart chart1 = new pieChart(500,500,"Cevaplama Oranı");
-        chart1.addSingleElement("Cevaplayan Öğrenci",file.getCevapAdedi());
-        chart1.addSingleElement("Cevaplamayan Öğrenci", file.getÖğrenciSayısı());
-        return chart1.getChart();
-    }
-
-    public static void printCevaplamaOraniPieChart(File_f file){
-        PieChart chart = createCevaplamaOraniPieChart(file);
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-
-                // Create and set up the window.
-                JFrame frame = new JFrame("Charts");
-                frame.setLayout(new BorderLayout());
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-                // chart
-                JPanel chartPanel = new XChartPanel<PieChart>(chart);
-                frame.add(chartPanel, BorderLayout.CENTER);
-
-
-                frame.pack();
-                frame.setVisible(true);
-            }
-        });
-    }
-}
 
