@@ -3,8 +3,6 @@
  * @Date 20.03.2019 / 03.04.2019
  * @Description: Creating graphs.
  */
-
-
 package Project.GUIDemo;
 
 import Project.barCharts.barChart;
@@ -513,7 +511,7 @@ public class Charts {
 
     public static CategoryChart createScoringForAllSectionsBarChart(File_f file){
 
-        barChart chart = new barChart(600, 500, "Number of Scores", "Score Points", "Numbers");
+        barChart chart = new barChart(500, 500, "Number of Scores", "Score Points", "Numbers");
         ArrayList<String> x = new ArrayList<>();
         x.add("1");
         x.add("2");
@@ -573,7 +571,7 @@ public class Charts {
 
     public static CategoryChart createSectionOrtalamalariBarChart(File_f file){
 
-        barChart chart = new barChart(970, 500, "Section Ortalamalari", "Sections", "Averages");
+        barChart chart = new barChart(500, 500, "Section Ortalamalari", "Sections", "Averages");
         ArrayList<String> x = new ArrayList<>();
         x.add("Flipped");
         x.add("Course");
@@ -701,7 +699,7 @@ public class Charts {
             sectionAverages[i]=sectionAverage;
         }
 
-        pieChart chart1 = new pieChart(500,450,"Section Averages");
+        pieChart chart1 = new pieChart(500,500,"Section Averages");
         chart1.addSingleElement("Flipped Classroom",sectionAverages[0]);
         chart1.addSingleElement("Course", sectionAverages[1]);
         chart1.addSingleElement("Instructor",sectionAverages[2]);
@@ -739,7 +737,7 @@ public class Charts {
 
 
     public static PieChart createCevaplamaOraniPieChart(File_f file){
-        pieChart chart1 = new pieChart(400,250,"Cevaplama Oranı");
+        pieChart chart1 = new pieChart(500,500,"Cevaplama Oranı");
         chart1.addSingleElement("Cevaplayan Öğrenci",file.getCevapAdedi());
         chart1.addSingleElement("Cevaplamayan Öğrenci", file.getÖğrenciSayısı());
         return chart1.getChart();
@@ -768,3 +766,4 @@ public class Charts {
         });
     }
 }
+
