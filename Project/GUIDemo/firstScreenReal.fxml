@@ -2,16 +2,20 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Project.GUIDemo.Project">
    <children>
@@ -27,7 +31,7 @@
       <TableView fx:id="courseTable" layoutX="513.0" layoutY="65.0" prefHeight="273.0" prefWidth="448.0">
         <columns>
           <TableColumn fx:id="courseCode" prefWidth="125.0" text="Course Code" />
-          <TableColumn fx:id="section" prefWidth="106.0" text="Section" />
+          <TableColumn fx:id="tableSection" prefWidth="106.0" text="Section" />
             <TableColumn fx:id="year" prefWidth="113.0" text="Year" />
             <TableColumn fx:id="term" prefWidth="105.0" text="Term" />
         </columns>
@@ -37,10 +41,11 @@
             <Font name="Calibri Bold" size="18.0" />
          </font>
       </Text>
-      <ButtonBar layoutX="580.0" layoutY="344.0" prefHeight="40.0" prefWidth="364.0">
+      <ButtonBar layoutX="498.0" layoutY="344.0" prefHeight="40.0" prefWidth="517.0">
         <buttons>
-          <Button mnemonicParsing="false" onAction="#saveButtonPushed" prefHeight="25.0" prefWidth="203.0" text="Analyse File &amp; Save" />
-            <RadioButton fx:id="enableSavePathText" mnemonicParsing="false" onAction="#savePathTextEnabled" text="Show Save Path" />
+          <Button mnemonicParsing="false" onAction="#saveSingleFileButtonPushed" prefHeight="25.0" prefWidth="203.0" text="Analyse Single File &amp; Save" />
+            <RadioButton fx:id="enableSavePathText" mnemonicParsing="false" onAction="#savePathTextEnabled" prefHeight="17.0" text="Show Save Path" />
+            <Label fx:id="savedText" minWidth="66.0" prefHeight="17.0" prefWidth="17.0" />
         </buttons>
       </ButtonBar>
       <TableView fx:id="commentTable" layoutX="55.0" layoutY="274.0" prefHeight="458.0" prefWidth="431.0">
@@ -64,5 +69,27 @@
          </font>
       </Text>
       <Label fx:id="savePathText" contentDisplay="CENTER" layoutX="647.0" layoutY="384.0" prefHeight="17.0" prefWidth="299.0" textOverrun="CENTER_WORD_ELLIPSIS" />
+      <Button layoutX="693.0" layoutY="479.0" mnemonicParsing="false" onAction="#drawBarChartButtonPushed" prefHeight="25.0" prefWidth="106.0" text="Draw Barchart" />
+      <Button layoutX="693.0" layoutY="546.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="106.0" text="Draw PieChart" />
+      <Button layoutX="693.0" layoutY="613.0" mnemonicParsing="false" text="Draw RadarChart" />
+      <VBox layoutX="527.0" layoutY="479.0" prefHeight="159.0" prefWidth="129.0">
+         <children>
+            <HBox prefHeight="0.0" prefWidth="129.0" />
+            <HBox prefHeight="105.0" prefWidth="129.0">
+               <children>
+                  <ListView fx:id="listView" prefHeight="111.0" prefWidth="129.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="27.0" prefWidth="129.0">
+               <children>
+                  <ChoiceBox fx:id="choiceBoxSectionsBC" prefHeight="0.0" prefWidth="129.0" />
+               </children>
+            </HBox>
+            <ChoiceBox fx:id="choiceBoxSubSectionsBC" prefHeight="21.0" prefWidth="129.0" />
+         </children>
+      </VBox>
+      <Line endX="389.0" layoutX="587.0" layoutY="410.0" startX="-89.0" />
+      <ChoiceBox fx:id="choiceBoxCourseCodesBC" layoutX="592.0" layoutY="427.0" prefHeight="25.0" prefWidth="145.0" />
+      <Button layoutX="746.0" layoutY="427.0" mnemonicParsing="false" onAction="#selectCourseButtonPushed" prefHeight="25.0" prefWidth="135.0" text="Select Course Code" />
    </children>
 </AnchorPane>
