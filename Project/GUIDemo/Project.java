@@ -57,7 +57,7 @@ public class Project extends Application implements Initializable {
     public TableColumn<Course, String> courseCode;
 
     @FXML
-    public TableColumn<Course,String> section;
+    public TableColumn<Course,String> tableSection;
 
     @FXML
     public TableColumn<Course,String> year;
@@ -94,7 +94,7 @@ public class Project extends Application implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         //set up table columns
         courseCode.setCellValueFactory(new PropertyValueFactory<>("courseCode"));
-        section.setCellValueFactory(new PropertyValueFactory<>("Sections"));
+        tableSection.setCellValueFactory(new PropertyValueFactory<>("section"));
         year.setCellValueFactory(new PropertyValueFactory<>("year"));
         term.setCellValueFactory(new PropertyValueFactory<>("term"));
 
@@ -166,8 +166,8 @@ public class Project extends Application implements Initializable {
         if(usableArray.size()==1){
             File_f graphs = multifileGoingToBeUsedInGraphs.get(0);
             saveOperations.saveToPDF(graphs);
-            savedText.setText("Saved ✓");
 
+            savedText.setText("Saved ✓");
         }
     }
 
@@ -189,6 +189,7 @@ public class Project extends Application implements Initializable {
         }
         catch (Exception ex){
         }
+
     }
 
 }
