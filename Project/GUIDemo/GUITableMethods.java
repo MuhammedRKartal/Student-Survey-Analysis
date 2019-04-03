@@ -35,12 +35,12 @@ public class GUITableMethods {
                 try{
                     String[] nameParts = temp.split("_");
                     String courseCode = nameParts[0];
-                    String section = nameParts[1];
+                    String tableSection = nameParts[1];
                     String year = nameParts[2];
                     String term = nameParts[3];
-                    Course oneCourse = new Course(courseCode, section, year, term);
+                    Course oneCourse = new Course(courseCode, tableSection, year, term);
+                    oneCourse.setFileJustFile(tempFileArray.get(i));
                     courses.add(oneCourse);
-
 
                     counter++;
                     Project.usableArray.add(tempFileArray.get(i));
