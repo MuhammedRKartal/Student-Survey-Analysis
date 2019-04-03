@@ -51,6 +51,9 @@ public class Project extends Application implements Initializable {
     public static ArrayList<File_f> multifileGoingToBeUsedInGraphs; //File_f object casted usableArray.
 
     public static String SelectedCourseCode = "";
+    public static String SelectedSection = "";
+    public static String SelectedSubSection = "";
+    public static Set<Integer> SelectedYears;
 
 
     //FXML Course Table elements for GUI (top-right table)
@@ -98,27 +101,70 @@ public class Project extends Application implements Initializable {
         savePathText.setText("");
         savedText.setText("");
 
-        listView.getItems().add("");
         listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
     }
 
 
+
+
+
+
+    //Selects course code to use it in other sections.
     public void selectCourseButtonPushed(ActionEvent event){
-        SelectedCourseCode=getCourseCode();
+        SelectedCourseCode=getSelectedCourseCode();
+
+        //Filling the years listview.
         ObservableList<Integer> yearsBC = FXCollections.observableArrayList(getYearsOfUsableArray(SelectedCourseCode));
         listView.setItems(yearsBC);
 
+        //Filling the Sections choicebox
         ObservableList<String> sectionsBC = FXCollections.observableArrayList(getSectionsOfCourseCode(SelectedCourseCode));
         choiceBoxSectionsBC.setItems(sectionsBC);
 
+        //Filling the SubSections choicebox
         ObservableList<String> subsectionsBC = FXCollections.observableArrayList(getsubsectionsOfCourseCode(SelectedCourseCode));
         choiceBoxSubSectionsBC.setItems(subsectionsBC);
     }
 
 
+    //Makes ready the parameters BarChart.
+    public void drawBarChartButtonPushed(ActionEvent event){
+
+        SelectedYears = getSelectedYears();
+        SelectedSection = getSelectedSection();
+        SelectedSubSection = getSelectedSubSection();
+
+        System.out.println(SelectedSection);
+        System.out.println(SelectedSubSection);
+        for (int year:SelectedYears){
+            System.out.println(year);
+        }
+    }
+
+
+
+
+
+
+
+    //################################################################################################################################################
+    //################################################################################################################################################
+    //################################################################Chose File Buttons##############################################################
+    //################################################################################################################################################
+    //################################################################################################################################################
+
+
     //When Select File(s) button pushed it pop ups a screen and ask you for selecting file(s).
     public void choseFileButtonPushed(ActionEvent event) throws IOException{
+
+        try{
+            listView.getItems().clear();
+            choiceBoxSectionsBC.getItems().clear();
+            choiceBoxSubSectionsBC.getItems().clear();
+        }
+        catch (Exception ex){ }
+
         //Setting the File Chooser pop-up screen.
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select File Dialog");
@@ -143,6 +189,14 @@ public class Project extends Application implements Initializable {
 
     //When Select Directory button pushed it pop ups a screen and ask you for selecting directory and takes only excel files from this directory.
     public void choseDirectoryButtonPushed(ActionEvent event) throws IOException{
+        try{
+            listView.getItems().clear();
+            choiceBoxSectionsBC.getItems().clear();
+            choiceBoxSubSectionsBC.getItems().clear();
+        }
+        catch (Exception ex){ }
+
+
         //Setting the directory chooser.
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Select Directory Dialog");
@@ -179,6 +233,21 @@ public class Project extends Application implements Initializable {
 
     }
 
+
+
+
+
+
+
+
+
+    //################################################################################################################################################
+    //################################################################################################################################################
+    //################################################################Save File Buttons##############################################################
+    //################################################################################################################################################
+    //################################################################################################################################################
+
+
     //Checks for single or multifile, makes the analysis of file(s) and saves the analysis on selected directory.
     public void saveButtonPushed(ActionEvent event) throws IOException {
         if(usableArray.size()==1){
@@ -209,6 +278,21 @@ public class Project extends Application implements Initializable {
         }
     }
 
+
+
+
+
+
+
+    //################################################################################################################################################
+    //################################################################################################################################################
+    //################################################################Draw Barchart Elements##########################################################
+    //################################################################################################################################################
+    //################################################################################################################################################
+
+
+
+    //Gets unique years from selected files.
     public Set<Integer> getYearsOfUsableArray(String courseCode) {
         Set<Integer> years = new HashSet<>();
         try{
@@ -223,6 +307,8 @@ public class Project extends Application implements Initializable {
         return years;
     }
 
+
+    //Gets unique course codes from selected files.
     public Set<String> getCourseCodesOfUsableArray(){
         Set<String> courseCodes = new HashSet<>();
         try{
@@ -235,10 +321,7 @@ public class Project extends Application implements Initializable {
         return courseCodes;
     }
 
-    public String getCourseCode(){
-        return choiceBoxCourseCodesBC.getValue().toString();
-    }
-
+    //Gets sections of selected course code.
     public ArrayList<String> getSectionsOfCourseCode(String courseCode){
         ArrayList<String> sectionsOfCourse = new ArrayList<>();
         try{
@@ -253,6 +336,8 @@ public class Project extends Application implements Initializable {
         return sectionsOfCourse;
     }
 
+
+    //Gets subsections of selected course code.
     public ArrayList<String> getsubsectionsOfCourseCode(String courseCode){
         ArrayList<String> subsectionsOfCourse = new ArrayList<>();
         try{
@@ -268,6 +353,31 @@ public class Project extends Application implements Initializable {
         }
         return subsectionsOfCourse;
     }
+    
+    public Set<Integer> getSelectedYears(){
+
+        ObservableList<Integer> x = listView.getSelectionModel().getSelectedItems();
+        Set<Integer> y = new HashSet<>();
+        for (int i=0; i<x.size(); i++){
+            y.add(x.get(i));
+        }
+        return y;
+    }
+
+    public String getSelectedCourseCode(){
+        return choiceBoxCourseCodesBC.getValue().toString();
+    }
+
+    public String getSelectedSection(){
+        return choiceBoxSectionsBC.getValue().toString();
+    }
+
+    public String getSelectedSubSection(){
+        return choiceBoxSubSectionsBC.getValue().toString();
+    }
+
+
+
 
 
 }
