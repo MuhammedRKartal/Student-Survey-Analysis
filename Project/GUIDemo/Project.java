@@ -96,12 +96,14 @@ public class Project extends Application implements Initializable {
         userAddedComment.setCellValueFactory(new PropertyValueFactory<>("userAddedComment"));
 
         userAddedComment.setCellFactory(TextFieldTableCell.forTableColumn());
-        commentTable.setEditable(true);
+        commentTable.setEditable(true); //To edit comment table.
+
+        courseTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE); //To select single file from course table.
 
         savePathText.setText("");
         savedText.setText("");
 
-        listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE); //For selecting multiple years on multiple file operations.
 
     }
 
@@ -175,7 +177,9 @@ public class Project extends Application implements Initializable {
 
 
         //Load Data
-        courseTable.setItems(GUITableMethods.getCourse()); //Load file names to course table.
+        ObservableList<Course> courseTableItems = GUITableMethods.getCourse();
+        courseTable.setItems(courseTableItems);//Load file names to course table.
+
         multifileGoingToBeUsedInGraphs = new ArrayList<>(); // Reseting the elements of ArrayList.
         fileReadOperations.Load_Multi_Files( multifileGoingToBeUsedInGraphs, usableArray); //Reading the file(s).
         commentTable.setItems(GUITableMethods.getComments(multifileGoingToBeUsedInGraphs)); //Adding comments of files to comment table.
@@ -220,7 +224,9 @@ public class Project extends Application implements Initializable {
         }
 
         //load data
-        courseTable.setItems(GUITableMethods.getCourse());
+        ObservableList<Course> courseTableItems = GUITableMethods.getCourse();
+        courseTable.setItems(courseTableItems);
+
         multifileGoingToBeUsedInGraphs = new ArrayList<>();
         fileReadOperations.Load_Multi_Files( multifileGoingToBeUsedInGraphs, usableArray);
         commentTable.setItems(GUITableMethods.getComments(multifileGoingToBeUsedInGraphs));
@@ -249,10 +255,16 @@ public class Project extends Application implements Initializable {
 
 
     //Checks for single or multifile, makes the analysis of file(s) and saves the analysis on selected directory.
-    public void saveButtonPushed(ActionEvent event) throws IOException {
+    public void saveSingleFileButtonPushed(ActionEvent event) throws IOException {
         if(usableArray.size()==1){
             File_f graphs = multifileGoingToBeUsedInGraphs.get(0);
-            saveOperations.saveToPDF(graphs);
+            saveOperations.saveSingleFileToPDF(graphs);
+
+            savedText.setText("Saved ✓");
+        }
+        else{
+            File_f graph = getSelectedSingleFile();
+            saveOperations.saveSingleFileToPDF(graph);
 
             savedText.setText("Saved ✓");
         }
@@ -353,7 +365,7 @@ public class Project extends Application implements Initializable {
         }
         return subsectionsOfCourse;
     }
-    
+
     public Set<Integer> getSelectedYears(){
 
         ObservableList<Integer> x = listView.getSelectionModel().getSelectedItems();
@@ -374,6 +386,11 @@ public class Project extends Application implements Initializable {
 
     public String getSelectedSubSection(){
         return choiceBoxSubSectionsBC.getValue().toString();
+    }
+
+    public File_f getSelectedSingleFile(){
+        ObservableList<Course> x = courseTable.getSelectionModel().getSelectedItems();
+        return x.get(0).getFileFile_f();
     }
 
 
