@@ -9,6 +9,8 @@ package Project.GUIDemo;
 
 import Project.mainObjects.File_f;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -48,44 +50,33 @@ public class Project extends Application implements Initializable {
     public static ArrayList<File> usableArray; //ArrayList for just accepted typed files.
     public static ArrayList<File_f> multifileGoingToBeUsedInGraphs; //File_f object casted usableArray.
 
+    public static String SelectedCourseCode = "";
+
 
     //FXML Course Table elements for GUI (top-right table)
-    @FXML
-    private TableView<Course> courseTable;
-
-    @FXML
-    public TableColumn<Course, String> courseCode;
-
-    @FXML
-    public TableColumn<Course,String> tableSection;
-
-    @FXML
-    public TableColumn<Course,String> year;
-
-    @FXML
-    public TableColumn<Course,String> term;
-
+    @FXML private TableView<Course> courseTable;
+    @FXML public TableColumn<Course, String> courseCode;
+    @FXML public TableColumn<Course,String> tableSection;
+    @FXML public TableColumn<Course,String> year;
+    @FXML public TableColumn<Course,String> term;
 
     //FXML Comment Table elements for GUI (bottom-left table)
-    @FXML
-    private TableView<Comments> commentTable;
-
-    @FXML
-    public TableColumn<Comments,String> comment;
-
-    @FXML
-    public TableColumn<Comments,String> userAddedComment;
-
+    @FXML private TableView<Comments> commentTable;
+    @FXML public TableColumn<Comments,String> comment;
+    @FXML public TableColumn<Comments,String> userAddedComment;
 
     //FXML Radio button elements for GUI, setting label to path when clicked etc.
-    @FXML
-    public RadioButton enableSavePathText;
+    @FXML public RadioButton enableSavePathText;
+    @FXML public Label savePathText;
+    @FXML public Label savedText;
 
-    @FXML
-    public Label savePathText;
+    //FXML ListView of Years
+    @FXML public ListView listView;
 
-    @FXML
-    public Label savedText;
+    //FXML ChoiceBox of CourseCode
+    @FXML public ChoiceBox choiceBoxCourseCodesBC;
+    @FXML public ChoiceBox choiceBoxSectionsBC;
+    @FXML public ChoiceBox choiceBoxSubSectionsBC;
 
 
 
@@ -106,7 +97,25 @@ public class Project extends Application implements Initializable {
 
         savePathText.setText("");
         savedText.setText("");
+
+        listView.getItems().add("");
+        listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
     }
+
+
+    public void selectCourseButtonPushed(ActionEvent event){
+        SelectedCourseCode=getCourseCode();
+        ObservableList<Integer> yearsBC = FXCollections.observableArrayList(getYearsOfUsableArray(SelectedCourseCode));
+        listView.setItems(yearsBC);
+
+        ObservableList<String> sectionsBC = FXCollections.observableArrayList(getSectionsOfCourseCode(SelectedCourseCode));
+        choiceBoxSectionsBC.setItems(sectionsBC);
+
+        ObservableList<String> subsectionsBC = FXCollections.observableArrayList(getsubsectionsOfCourseCode(SelectedCourseCode));
+        choiceBoxSubSectionsBC.setItems(subsectionsBC);
+    }
+
 
     //When Select File(s) button pushed it pop ups a screen and ask you for selecting file(s).
     public void choseFileButtonPushed(ActionEvent event) throws IOException{
@@ -126,6 +135,10 @@ public class Project extends Application implements Initializable {
         commentTable.setItems(GUITableMethods.getComments(multifileGoingToBeUsedInGraphs)); //Adding comments of files to comment table.
 
         savedText.setText("");
+
+        ObservableList<String> courseCodesBC = FXCollections.observableArrayList(getCourseCodesOfUsableArray());
+        choiceBoxCourseCodesBC.setItems(courseCodesBC);
+
     }
 
     //When Select Directory button pushed it pop ups a screen and ask you for selecting directory and takes only excel files from this directory.
@@ -159,6 +172,11 @@ public class Project extends Application implements Initializable {
         commentTable.setItems(GUITableMethods.getComments(multifileGoingToBeUsedInGraphs));
 
         savedText.setText("");
+
+        ObservableList<String> courseCodesBC = FXCollections.observableArrayList(getCourseCodesOfUsableArray());
+        choiceBoxCourseCodesBC.setItems(courseCodesBC);
+
+
     }
 
     //Checks for single or multifile, makes the analysis of file(s) and saves the analysis on selected directory.
@@ -189,7 +207,67 @@ public class Project extends Application implements Initializable {
         }
         catch (Exception ex){
         }
-
     }
+
+    public Set<Integer> getYearsOfUsableArray(String courseCode) {
+        Set<Integer> years = new HashSet<>();
+        try{
+            for (int i = 0; i < multifileGoingToBeUsedInGraphs.size(); i++) {
+                if (multifileGoingToBeUsedInGraphs.get(i).getDersKodu().equals(SelectedCourseCode)) {
+                    years.add(multifileGoingToBeUsedInGraphs.get(i).year);
+                }
+            }
+        }
+        catch (Exception ex){
+        }
+        return years;
+    }
+
+    public Set<String> getCourseCodesOfUsableArray(){
+        Set<String> courseCodes = new HashSet<>();
+        try{
+            for (int i=0; i<multifileGoingToBeUsedInGraphs.size(); i++){
+                courseCodes.add(multifileGoingToBeUsedInGraphs.get(i).getDersKodu());
+            }
+        }
+        catch (Exception ex){
+        }
+        return courseCodes;
+    }
+
+    public String getCourseCode(){
+        return choiceBoxCourseCodesBC.getValue().toString();
+    }
+
+    public ArrayList<String> getSectionsOfCourseCode(String courseCode){
+        ArrayList<String> sectionsOfCourse = new ArrayList<>();
+        try{
+            for (int i=0; i<multifileGoingToBeUsedInGraphs.size(); i++){
+                for (int j=0; j<multifileGoingToBeUsedInGraphs.get(i).Sections.length;j++){
+                    sectionsOfCourse.add(multifileGoingToBeUsedInGraphs.get(i).Sections[j].getText());
+                }
+            }
+        }
+        catch (Exception ex){
+        }
+        return sectionsOfCourse;
+    }
+
+    public ArrayList<String> getsubsectionsOfCourseCode(String courseCode){
+        ArrayList<String> subsectionsOfCourse = new ArrayList<>();
+        try{
+            for (int i=0; i<multifileGoingToBeUsedInGraphs.size(); i++){
+                for (int j=0; j<multifileGoingToBeUsedInGraphs.get(i).Sections.length;j++){
+                    for (int k=0; k<multifileGoingToBeUsedInGraphs.get(i).Sections[j].subsections.size();k++){
+                        subsectionsOfCourse.add(multifileGoingToBeUsedInGraphs.get(i).Sections[j].subsections.get(k).text);
+                    }
+                }
+            }
+        }
+        catch (Exception ex){
+        }
+        return subsectionsOfCourse;
+    }
+
 
 }
