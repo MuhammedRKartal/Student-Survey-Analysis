@@ -56,31 +56,31 @@ public class saveOperations {
 
         //Single file save operations, it firstly saves the graphs on PNG format then adds that PNGs to PDF file.
 //        if (usableArray.size()==1){
-//        BitmapEncoder.saveBitmap(Charts.createCevaplamaOraniPieChart(file), currentPath+"\\chart1singlefile.png", BitmapEncoder.BitmapFormat.PNG);
-//        BitmapEncoder.saveBitmap(Charts.createSectionOrtalamariPieChart(file), currentPath+"\\chart2singlefile.png", BitmapEncoder.BitmapFormat.PNG);
+        BitmapEncoder.saveBitmap(Charts.createCevaplamaOraniPieChart(file), currentPath+"\\chart1singlefile.png", BitmapEncoder.BitmapFormat.PNG);
+        BitmapEncoder.saveBitmap(Charts.createSectionOrtalamariPieChart(file), currentPath+"\\chart2singlefile.png", BitmapEncoder.BitmapFormat.PNG);
 //        BitmapEncoder.saveBitmap(Charts.createScoringForAllSectionsPieChart(file), currentPath+"\\chart3singlefile.png", BitmapEncoder.BitmapFormat.PNG);
 //
-//        BitmapEncoder.saveBitmap(Charts.createScoringForAllSectionsBarChart(file), currentPath+"\\chart4singlefile.png", BitmapEncoder.BitmapFormat.PNG);
+        BitmapEncoder.saveBitmap(Charts.createScoringForAllSectionsBarChart(file), currentPath+"\\chart4singlefile.png", BitmapEncoder.BitmapFormat.PNG);
 //        BitmapEncoder.saveBitmap(Charts.createMultipleAveragesBarChart(file), currentPath+"\\chart5singlefile.png", BitmapEncoder.BitmapFormat.PNG);
 //        BitmapEncoder.saveBitmap(Charts.createScoringOfLearningOutComesBarChart(file), currentPath+"\\chart6singlefile.png", BitmapEncoder.BitmapFormat.PNG);
-//        BitmapEncoder.saveBitmap(Charts.createSectionOrtalamalariBarChart(file), currentPath+"\\chart7singlefile.png", BitmapEncoder.BitmapFormat.PNG);
+        BitmapEncoder.saveBitmap(Charts.createSectionOrtalamalariBarChart(file), currentPath+"\\chart7singlefile.png", BitmapEncoder.BitmapFormat.PNG);
 //
 //        BitmapEncoder.saveBitmap(Charts.createMultipleAveragesRadarChart(file), currentPath+"\\chart8singlefile.png", BitmapEncoder.BitmapFormat.PNG);
-//        BitmapEncoder.saveBitmap(Charts.createSectionOrtalamalariRadarChart(file),currentPath+"\\chart9singlefile.png", BitmapEncoder.BitmapFormat.PNG);
-//        BitmapEncoder.saveBitmap(Charts.createScoringOfLearningOutComesRadarChart(file),currentPath+"\\chart10singlefile.png", BitmapEncoder.BitmapFormat.PNG);
+        BitmapEncoder.saveBitmap(Charts.createSectionOrtalamalariRadarChart(file),currentPath+"\\chart9singlefile.png", BitmapEncoder.BitmapFormat.PNG);
+        BitmapEncoder.saveBitmap(Charts.createScoringOfLearningOutComesRadarChart(file),currentPath+"\\chart10singlefile.png", BitmapEncoder.BitmapFormat.PNG);
 
         Document document = new Document();
 
-//        String input1 = currentPath+"\\chart1singlefile.png"; // .gif and .jpg are ok too!
-//        String input2 = currentPath+"\\chart2singlefile.png";
+        String input1 = currentPath+"\\chart1singlefile.png"; // .gif and .jpg are ok too!
+        String input2 = currentPath+"\\chart2singlefile.png";
 //        String input3 = currentPath+"\\chart3singlefile.png";
-//        String input4 = currentPath+"\\chart4singlefile.png";
+        String input4 = currentPath+"\\chart4singlefile.png";
 //        String input5 = currentPath+"\\chart5singlefile.png";
 //        String input6 = currentPath+"\\chart6singlefile.png";
-//        String input7 = currentPath+"\\chart7singlefile.png";
+        String input7 = currentPath+"\\chart7singlefile.png";
 //        String input8 = currentPath+"\\chart8singlefile.png";
-//        String input9 = currentPath+"\\chart9singlefile.png";
-//        String input10 = currentPath+"\\chart10singlefile.png";
+        String input9 = currentPath+"\\chart9singlefile.png";
+        String input10 = currentPath+"\\chart10singlefile.png";
 
         String output = currentPath+"\\outputs.pdf";
 
@@ -100,22 +100,32 @@ public class saveOperations {
                 BitmapEncoder.saveBitmap(allSectionsVotePCS.get(i), path, BitmapEncoder.BitmapFormat.PNG);
                 document.add(com.itextpdf.text.Image.getInstance(path));
             }
+            path = String.format("%s\\RadarChartSubsectionAverages%dSinglefile.png", currentPath, 0);
+            BitmapEncoder.saveBitmap(Charts.createAllSubsectionAveragesRC(file), path, BitmapEncoder.BitmapFormat.PNG);
+            document.add(com.itextpdf.text.Image.getInstance(path));
+
+            path = String.format("%s\\RadarChartSubsectionandUniAverages%dSinglefile.png", currentPath, 0);
+            BitmapEncoder.saveBitmap(Charts.createAllSubsectionAveragesUniAveragesRC(file), path, BitmapEncoder.BitmapFormat.PNG);
+            document.add(com.itextpdf.text.Image.getInstance(path));
+
+            path = String.format("%s\\BarChartSubsectionandUniAverages%dSinglefile.png", currentPath, 0);
+            BitmapEncoder.saveBitmap(Charts.createAllSubsectionAveragesUniAveragesBC(file), path, BitmapEncoder.BitmapFormat.PNG);
+            document.add(com.itextpdf.text.Image.getInstance(path));
 
 
 
 
 
-
-//            document.add(com.itextpdf.text.Image.getInstance(input1));
-//            document.add(com.itextpdf.text.Image.getInstance(input2));
+            document.add(com.itextpdf.text.Image.getInstance(input1));
+            document.add(com.itextpdf.text.Image.getInstance(input2));
 //            document.add(com.itextpdf.text.Image.getInstance(input3));
-//            document.add(com.itextpdf.text.Image.getInstance(input4));
+            document.add(com.itextpdf.text.Image.getInstance(input4));
 //            document.add(com.itextpdf.text.Image.getInstance(input5));
 //            document.add(com.itextpdf.text.Image.getInstance(input6));
-//            document.add(com.itextpdf.text.Image.getInstance(input7));
+            document.add(com.itextpdf.text.Image.getInstance(input7));
 //            document.add(com.itextpdf.text.Image.getInstance(input8));
-//            document.add(com.itextpdf.text.Image.getInstance(input9));
-//            document.add(com.itextpdf.text.Image.getInstance(input10));
+            document.add(com.itextpdf.text.Image.getInstance(input9));
+            document.add(com.itextpdf.text.Image.getInstance(input10));
             document.close();
 
             writer.close();
