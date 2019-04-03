@@ -84,6 +84,9 @@ public class Project extends Application implements Initializable {
     @FXML
     public Label savePathText;
 
+    @FXML
+    public Label savedText;
+
 
 
     //Initializing GUI FXML elements.
@@ -102,6 +105,7 @@ public class Project extends Application implements Initializable {
         commentTable.setEditable(true);
 
         savePathText.setText("");
+        savedText.setText("");
     }
 
     //When Select File(s) button pushed it pop ups a screen and ask you for selecting file(s).
@@ -120,6 +124,8 @@ public class Project extends Application implements Initializable {
         multifileGoingToBeUsedInGraphs = new ArrayList<>(); // Reseting the elements of ArrayList.
         fileReadOperations.Load_Multi_Files( multifileGoingToBeUsedInGraphs, usableArray); //Reading the file(s).
         commentTable.setItems(GUITableMethods.getComments(multifileGoingToBeUsedInGraphs)); //Adding comments of files to comment table.
+
+        savedText.setText("");
     }
 
     //When Select Directory button pushed it pop ups a screen and ask you for selecting directory and takes only excel files from this directory.
@@ -151,6 +157,8 @@ public class Project extends Application implements Initializable {
         multifileGoingToBeUsedInGraphs = new ArrayList<>();
         fileReadOperations.Load_Multi_Files( multifileGoingToBeUsedInGraphs, usableArray);
         commentTable.setItems(GUITableMethods.getComments(multifileGoingToBeUsedInGraphs));
+
+        savedText.setText("");
     }
 
     //Checks for single or multifile, makes the analysis of file(s) and saves the analysis on selected directory.
@@ -158,6 +166,8 @@ public class Project extends Application implements Initializable {
         if(usableArray.size()==1){
             File_f graphs = multifileGoingToBeUsedInGraphs.get(0);
             saveOperations.saveToPDF(graphs);
+            savedText.setText("Saved ✓");
+
         }
     }
 
@@ -179,7 +189,6 @@ public class Project extends Application implements Initializable {
         }
         catch (Exception ex){
         }
-
     }
 
 }
