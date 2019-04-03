@@ -35,7 +35,6 @@ public class fileReadOperations {
         file.setDersKodu(s[0]);
         file.setSect(Integer.parseInt(s[1]));
 
-
         try {
 
             FileInputStream excelFile = new FileInputStream(new File(single.getAbsolutePath()));
@@ -70,7 +69,7 @@ public class fileReadOperations {
                     int subindex=-1;
                     Section section=new Section();
                     section.setText(r.getCell(0).getStringCellValue());
-                    file.section[++index]=section;
+                    file.Sections[++index]=section;
                     i++;}
 
                 r=datatypeSheet.getRow(i);
@@ -91,11 +90,11 @@ public class fileReadOperations {
                 subsection.four=r.getCell(8).getNumericCellValue();
                 subsection.five=r.getCell(9).getNumericCellValue();
                 subsection.universityAverage=r.getCell(10).getNumericCellValue();
-                file.section[index].subsections.add(subsection);
+                file.Sections[index].subsections.add(subsection);
 
             }
-            //ADDING COMMENTS
 
+            //ADDING COMMENTS
             for (int i=carryon+2;i<carryon+9;i++) {
                 Row r = datatypeSheet.getRow(i);
                 Cell c = r.getCell(0);
@@ -112,6 +111,7 @@ public class fileReadOperations {
 
 //        Charts.printSectionOrtalamalariRadarChart(file);
 
+//        file.setFile(file);//to use in Course Table GUI.
         return file;
     }
 }
