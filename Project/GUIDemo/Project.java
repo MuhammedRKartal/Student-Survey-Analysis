@@ -1,6 +1,6 @@
 /**
  * @Author Muhammed Rahmetullah Kartal
- * @Date 02.04.2019
+ * @Date 04.04.2019
  * @Description: Main program for GUI
  */
 
@@ -17,16 +17,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.knowm.xchart.CategoryChart;
+import org.knowm.xchart.XChartPanel;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.*;
 
 
@@ -129,7 +135,6 @@ public class Project extends Application implements Initializable {
         choiceBoxSubSectionsBC.setItems(subsectionsBC);
     }
 
-
     //Makes ready the parameters BarChart.
     public void drawBarChartButtonPushed(ActionEvent event){
 
@@ -137,13 +142,32 @@ public class Project extends Application implements Initializable {
         SelectedSection = getSelectedSection();
         SelectedSubSection = getSelectedSubSection();
 
+        // Create and set up the window.
+        JFrame frame = new JFrame("Charts");
+        frame.setLayout(new BorderLayout());
+
+        // chart
+        JPanel chartPanel = new XChartPanel<CategoryChart>(MultifileCharts.createMultifileYearSectionGivenCourseCodeGraph());
+        frame.add(chartPanel);
+
+        frame.pack();
+        frame.setVisible(true);
+
+
         System.out.println(SelectedSection);
         System.out.println(SelectedSubSection);
-        for (int year:SelectedYears){
-            System.out.println(year);
-        }
+
     }
 
+    public ArrayList<File_f> getSelectedFilesByCourseCode(String courseCode){
+        ArrayList<File_f> files = new ArrayList<>();
+        for (int i=0; i<multifileGoingToBeUsedInGraphs.size();i++){
+            if (multifileGoingToBeUsedInGraphs.get(i).getDersKodu().equals(SelectedCourseCode)){
+                files.add(multifileGoingToBeUsedInGraphs.get(i));
+            }
+        }
+        return files;
+    }
 
 
 
@@ -334,8 +358,8 @@ public class Project extends Application implements Initializable {
     }
 
     //Gets sections of selected course code.
-    public ArrayList<String> getSectionsOfCourseCode(String courseCode){
-        ArrayList<String> sectionsOfCourse = new ArrayList<>();
+    public Set<String> getSectionsOfCourseCode(String courseCode){
+        Set<String> sectionsOfCourse = new HashSet<>();
         try{
             for (int i=0; i<multifileGoingToBeUsedInGraphs.size(); i++){
                 for (int j=0; j<multifileGoingToBeUsedInGraphs.get(i).Sections.length;j++){
@@ -350,8 +374,8 @@ public class Project extends Application implements Initializable {
 
 
     //Gets subsections of selected course code.
-    public ArrayList<String> getsubsectionsOfCourseCode(String courseCode){
-        ArrayList<String> subsectionsOfCourse = new ArrayList<>();
+    public Set<String> getsubsectionsOfCourseCode(String courseCode){
+        Set<String> subsectionsOfCourse = new HashSet<>();
         try{
             for (int i=0; i<multifileGoingToBeUsedInGraphs.size(); i++){
                 for (int j=0; j<multifileGoingToBeUsedInGraphs.get(i).Sections.length;j++){
@@ -392,9 +416,5 @@ public class Project extends Application implements Initializable {
         ObservableList<Course> x = courseTable.getSelectionModel().getSelectedItems();
         return x.get(0).getFileFile_f();
     }
-
-
-
-
 
 }
